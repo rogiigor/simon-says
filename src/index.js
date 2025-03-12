@@ -2,8 +2,6 @@
  * DOM SELECTORS
  */
 
-const { sourceMapsEnabled } = require("process");
-
  const startButton = document.querySelector(".js-start-button");
  const statusSpan = document.querySelector(".js-status");
  const heading = document.querySelector(".js-heading"); 
@@ -38,7 +36,6 @@ let roundCount = 0; // track the number of rounds that have been played so far
     selector: document.querySelector(".js-pad-red"),
     sound: new Audio("https://github.com/rogiigor/simon-says/blob/main/assets/simon-says-sound-1.mp3?raw=true"),
   },
-  // TODO: Add the objects for the green, blue, and yellow pads. Use object for the red pad above as an example.
   {
     color: "green",
     selector: document.querySelector(".sj-pad-green"),
@@ -82,11 +79,8 @@ startButton.addEventListener("click", startButtonHandler);
  *
  */
 function startButtonHandler() {
-  // TODO: Write your code here.
-  setLevel();
+  maxRoundCount = setLevel();
   roundCount++;
-  startButton.classList.remove("start-button");
-  startButton.classList.remove("js-start-button");
   startButton.classList.add("hidden");
   statusSpan.classList.remove("hidden");
   playComputerTurn();
@@ -206,10 +200,12 @@ function setText(element, text) {
  */
 
 function activatePad(color) {
-  // TODO: Write your code here.
-  let pad = pads.find((pad) => pad.color === color);
-  pad.selector.classList.add("activated");
-  pad.sound.play();
+  let pad = pads.find((pad) => pad.color === color); // #1
+  pad.selector.classList.add("activated"); // #2
+  pad.sound.play(); // #3
+  setTimeout(() => {
+    pad.selector.classList.remove("activated");
+  }, 500);
 }
 
 /**
@@ -227,7 +223,10 @@ function activatePad(color) {
  */
 
 function activatePads(sequence) {
-  // TODO: Write your code here.
+  sequence.forEach((color, index) => {
+    let delay = (index + 1) * 600;
+    setTimeout(activatePad(color), delay);
+  })
 }
 
 /**
@@ -254,8 +253,15 @@ function activatePads(sequence) {
  * sequence.
  */
  function playComputerTurn() {
-  // TODO: Write your code here.
-
+  if (padContainer !== null) { // to satisfy test
+    padContainer.classList.add("unclickable");
+  }
+  setText(statusSpan, "The computer's turn...");
+  setText(heading,`Round ${roundCount} of ${maxRoundCount}`);
+  const sequence = ["red", "blue", "green", "yellow"];
+  let randomColor = getRandomItem(sequence);
+  computerSequence.push(randomColor); // #4
+  activatePads(computerSequence); // #5
   setTimeout(() => playHumanTurn(roundCount), roundCount * 600 + 1000); // 5
 }
 
@@ -268,6 +274,8 @@ function activatePads(sequence) {
  */
 function playHumanTurn() {
   // TODO: Write your code here.
+  padContainer.classList.remove("unclickable");
+  statusSpan.textContent = `Player 1 press left`;
 }
 
 /**
