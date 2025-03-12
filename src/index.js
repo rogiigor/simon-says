@@ -5,10 +5,9 @@
 const { sourceMapsEnabled } = require("process");
 
  const startButton = document.querySelector(".js-start-button");
- // TODO: Add the missing query selectors:
- const statusSpan = document.querySelector(".js-status"); // Use querySelector() to get the status element
- const heading = document.querySelector(".js-heading"); // Use querySelector() to get the heading element
- const padContainer = document.querySelector(".js-pad-container"); // Use querySelector() to get the heading element
+ const statusSpan = document.querySelector(".js-status");
+ const heading = document.querySelector(".js-heading"); 
+ const padContainer = document.querySelector(".js-pad-container");
 
 /**
  * VARIABLES
@@ -62,7 +61,7 @@ let roundCount = 0; // track the number of rounds that have been played so far
  */
 
 padContainer.addEventListener("click", padHandler);
-// TODO: Add an event listener `startButtonHandler()` to startButton.
+startButton.addEventListener("click", startButtonHandler);
 
 /**
  * EVENT HANDLERS
@@ -84,7 +83,13 @@ padContainer.addEventListener("click", padHandler);
  */
 function startButtonHandler() {
   // TODO: Write your code here.
-
+  setLevel();
+  roundCount++;
+  startButton.classList.remove("start-button");
+  startButton.classList.remove("js-start-button");
+  startButton.classList.add("hidden");
+  statusSpan.classList.remove("hidden");
+  playComputerTurn();
   return { startButton, statusSpan };
 }
 
@@ -139,7 +144,23 @@ function padHandler(event) {
  *
  */
 function setLevel(level = 1) {
-  // TODO: Write your code here.
+  if (!level || level === null) return 8;
+  switch(level) {
+    case 1:
+      return 8;
+      break;
+    case 2:
+      return 14;
+      break;
+    case 3:
+      return 20;
+      break;
+    case 4:
+      return 31;
+      break;
+    default:
+      return "Please enter level 1, 2, 3, or 4";
+  }
 }
 
 /**
@@ -158,16 +179,16 @@ function setLevel(level = 1) {
  * getRandomItem([1, 2, 3, 4]) //> returns 1
  */
 function getRandomItem(collection) {
-  // if (collection.length === 0) return null;
-  // const randomIndex = Math.floor(Math.random() * collection.length);
-  // return collection[randomIndex];
+  if (collection.length === 0) return null;
+  const randomIndex = Math.floor(Math.random() * collection.length);
+  return collection[randomIndex];
 }
 
 /**
  * Sets the status text of a given HTML element with a given a message
  */
 function setText(element, text) {
-  // TODO: Write your code here.
+  element.textContent = text;
   return element;
 }
 
@@ -186,6 +207,9 @@ function setText(element, text) {
 
 function activatePad(color) {
   // TODO: Write your code here.
+  let pad = pads.find((pad) => pad.color === color);
+  pad.selector.classList.add("activated");
+  pad.sound.play();
 }
 
 /**
