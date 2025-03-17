@@ -7,7 +7,7 @@
  const heading = document.querySelector(".js-heading"); 
  const padContainer = document.querySelector(".js-pad-container");
 
- let endSound = new Audio("../assets/magic_fly_victory.mp3?raw=true");
+ let endSound = new Audio("https://github.com/rogiigor/simon-says/blob/main/assets/magic_fly_victory.mp3?raw=true");
 
 /**
  * VARIABLES
