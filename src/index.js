@@ -7,7 +7,7 @@
  const heading = document.querySelector(".js-heading"); 
  const padContainer = document.querySelector(".js-pad-container");
 
- let endSound = new Audio("../assets/magic_fly_victory.mp3");
+ let endSound = new Audio("../assets/magic_fly_victory.mp3?raw=true");
 
 /**
  * VARIABLES
@@ -206,6 +206,7 @@ function checkRound() {
  * Resets the game. Called when either the player makes a mistake or wins the game.
  */
 function resetGame(text) {
+  endSound.play();
   alert(text);
   setText(heading, "Simon Says");
   startButton.classList.remove("hidden");
@@ -215,7 +216,7 @@ function resetGame(text) {
   computerSequence = [];
   playerSequence = [];
   roundCount = 0;
-  endSound.play();
+  endSound.pause();
 }
 
 /**
