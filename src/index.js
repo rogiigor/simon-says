@@ -7,6 +7,8 @@
  const heading = document.querySelector(".js-heading"); 
  const padContainer = document.querySelector(".js-pad-container");
 
+ let endSound = new Audio("../assets/magic_fly_victory.mp3");
+
 /**
  * VARIABLES
  */
@@ -213,6 +215,7 @@ function resetGame(text) {
   computerSequence = [];
   playerSequence = [];
   roundCount = 0;
+  endSound.play();
 }
 
 /**
