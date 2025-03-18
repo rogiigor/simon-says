@@ -206,7 +206,11 @@ function checkRound() {
  * Resets the game. Called when either the player makes a mistake or wins the game.
  */
 function resetGame(text) {
+ try {
   endSound.play();
+ } catch (error) {
+  console.error("Error playing sound: ", error);
+ }
   alert(text);
   setText(heading, "Simon Says");
   startButton.classList.remove("hidden");
