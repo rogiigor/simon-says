@@ -220,9 +220,8 @@ function resetGame(text) {
   computerSequence = [];
   playerSequence = [];
   roundCount = 0;
-  setTimeout(function() => {
-   endSound.pause();
-  }, 150);
+  endSound.pause();
+  endSound.currentTime = 0;
 }
 
 /**
